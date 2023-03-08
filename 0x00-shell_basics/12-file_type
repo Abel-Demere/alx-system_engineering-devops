@@ -1,0 +1,2 @@
+#!/bin/bash
+file_type=$(file -b /tmp/iamafile)
