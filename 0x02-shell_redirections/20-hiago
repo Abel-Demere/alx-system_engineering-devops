@@ -1,0 +1,2 @@
+#!/bin/bash
+echo input with c and C | sed 's/[cC]//g'
