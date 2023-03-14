@@ -1,2 +1,3 @@
 #!/bin/bash
-echo $NUM
+printf "%.2f
+" "$NUM"
