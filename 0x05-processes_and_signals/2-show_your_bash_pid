@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
-
 # shellcheck disable=SC2009
-
-# Use ps command to show lines containing the word "bash" and exclude the grep command itself
 ps aux | grep bash | grep -v grep
