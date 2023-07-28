@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# The function that runs the process and writes to the file
+function run_process {
+    while true
+    do
+        echo "I am alive!" >> /tmp/my_process
+        sleep 2
+    done
+}
+
+# Check the argument passed to the script
+case "$1" in
+    start)
+        run_process &
+        echo $! > /var/run/my_process.pid
+        echo "manage_my_process started"
+        ;;
+    stop)
+        if [ -f /var/run/my_process.pid ]; then
+            pid=$(cat /var/run/my_process.pid)
+            kill $pid
+            rm /var/run/my_process.pid
+            echo "manage_my_process stopped"
+        else
+            echo "manage_my_process is not running"
+        fi
+        ;;
+    restart)
+        if [ -f /var/run/my_process.pid ]; then
+            pid=$(cat /var/run/my_process.pid)
+            kill $pid
+            rm /var/run/my_process.pid
+            run_process &
+            echo $! > /var/run/my_process.pid
+            echo "manage_my_process restarted"
+        else
+            run_process &
+            echo $! > /var/run/my_process.pid
+            echo "manage_my_process started"
+        fi
+        ;;
+    *)
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac
