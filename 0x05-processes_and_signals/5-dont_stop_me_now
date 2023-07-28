@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Stop the 4-to_infinity_and_beyond process using SIGTERM
+killall -15 4-to_infinity_and_beyond
