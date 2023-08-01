@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-^(/d{3})(/s|/-)?(/d{3})(/s|/-)?(/d{4})$
+puts ARGV[0].scan(/^\d{10}$/)
