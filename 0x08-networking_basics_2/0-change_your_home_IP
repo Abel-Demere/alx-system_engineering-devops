@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
-# This script changes the localhost and facebook.com IP addresses in the /etc/hosts file.
-
-# Check if the script is running on Docker (checker environment)
-if [ -f /.dockerenv ]; then
-    # Modify localhost IP to 127.0.0.2 and facebook.com IP to 8.8.8.8
-    echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts
-    echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts
-    echo "Host IP addresses updated successfully!"
-else
-    echo "This script is intended to run on the checker environment (Docker)."
-fi
+# changes the localhost and facebook.com IP addresses in the /etc/hosts file.
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2     localhost" > ~/hosts.new
+echo "8.8.8.8       facebook.com" >> ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
