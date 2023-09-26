@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# This script installs Nginx and configures it to meet the specified requirements.
-apt-get updat
+# This script installs Nginx and configures it.
+# Create a simple HTML page with "Hello World!"
+# Check if Nginx is already running and start it if not
+apt-get update
 apt-get install -y nginx
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
 service nginx restart
