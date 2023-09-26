@@ -3,7 +3,7 @@
 
 # Check if all required parameters are provided
 path="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-filename=$(basename "$BASH_SOURCE")
+filename=$(basename "${BASH_SOURCE[0]}")
 brown='\e[0;33m'
 reset='\033[0m'
 file="$1"
