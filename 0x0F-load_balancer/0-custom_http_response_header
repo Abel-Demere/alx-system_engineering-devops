@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures Nginx and add a custom HTTP response header
+#This script configures Nginx and add a custom HTTP response header
 sudo apt-get -y update
 sudo apt-get -y install nginx
 sudo ufw allow "Nginx HTTP"
