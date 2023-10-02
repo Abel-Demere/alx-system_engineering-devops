@@ -1,34 +1,34 @@
 #!/usr/bin/env bash
-# This script configures Nginx on web-02 to add a custom HTTP response header
-# Install Nginx if not already installed
-# Add custom header to Nginx config
-# Reload Nginx to apply changes
+# This script configures Nginx and add a custom HTTP response header
 sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-sudo mkdir -p /var/www/html /var/www/error
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-server_config=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	add_header X-Served-By \$hostname;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://youtube.com permanent;
-	}
-	error_page 404 /404.html;
-	location = /404.html {
-		internal;
-	}
-}"
+sudo ufw allow "Nginx HTTP"
 
-echo "$server_config" > /etc/nginx/sites-enabled/default
+sudo mkdir -p /var/www/html
+sudo touch /var/www/html/index.html
+sudo chmod 666 /var/www/html/index.html
+echo "Hello World" > /var/www/html/index.html
+sudo touch /var/www/html/404.html
+sudo chmod 666 /var/www/html/404.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+sudo chmod 666 /etc/nginx/sites-available/default
+printf %s "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
+    root   /var/www/html;
+    index  index.html index.htm;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=dQw4w9WgXcQ;
+    }
+
+    error_page 404 /404.html;
+    location /404 {
+      root /var/www/html;
+      internal;
+    }
+}" > /etc/nginx/sites-available/default
+
 sudo service nginx restart
