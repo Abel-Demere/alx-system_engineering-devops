@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # This script configures the domain zone and displays information about subdomains
-
 if [[ $# -eq 0 ]]; then
     echo "Usage: $0 <domain> [subdomain]"
     exit 1
