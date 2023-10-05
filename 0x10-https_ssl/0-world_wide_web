@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 # This script configures the domain zone and displays information about subdomains
 
-print_info () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+domain="$1"
+subdomain="$2"
+
+query_dns() {
+    local sub="$1"
+    local record_type="$2"
+    local result
+    result=$(dig +short "$sub.$domain" | head -1)
+    echo "The subdomain $sub is a $record_type record and points to $result"
 }
 
-if [ "$#" -eq 2 ]
-then
-    print_info "$2.$1" "$2"
+if [[ -z "$subdomain" ]]; then
+    query_dns "www" "A"
+    query_dns "lb-01" "A"
+    query_dns "web-01" "A"
+    query_dns "web-02" "A"
 else
-    print_info "www.$1" "www"
-    print_info "lb-01.$1" "lb-01"
-    print_info "web-01.$1" "web-01"
-    print_info "web-02.$1" "web-02"
+    query_dns "$subdomain" "A"
 fi
