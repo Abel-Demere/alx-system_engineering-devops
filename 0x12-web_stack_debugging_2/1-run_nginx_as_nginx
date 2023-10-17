@@ -1,10 +1,6 @@
 #!/bin/bash
 # This script configures Nginx to run as the nginx user and listen on port 8080
-
-# Check if Nginx is installed
-if [ ! -x /usr/sbin/nginx ]; then
-pkill -f apache2
-chmod 644 /etc/nginx/nginx.conf
-sed -i "1i user nginx;" /etc/nginx/nginx.conf
-sed -i 's/80/8080/' /etc/nginx/sites-enabled/default
-sudo -u nginx service nginx restart
+sudo service nginx stop
+sudo chown -R nginx:nginx /etc/nginx /var/log/nginx /var/lib/nginx /var/cache/nginx
+sudo sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/nginx.conf
+sudo service nginx start
