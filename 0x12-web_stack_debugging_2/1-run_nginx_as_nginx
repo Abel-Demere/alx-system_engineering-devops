@@ -1,6 +1,6 @@
 #!/bin/bash
-# This script configures Nginx to run as the nginx user and listen on port 8080
+# This script configures Nginx to run as the www-data user and listen on port 8080
 sudo service nginx stop
-sudo chown -R nginx:nginx /etc/nginx /var/log/nginx /var/lib/nginx /var/cache/nginx
-sudo sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/nginx.conf
+sudo sed -i 's/user www-data;/user www-data;/' /etc/nginx/nginx.conf
+sudo sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
 sudo service nginx start
