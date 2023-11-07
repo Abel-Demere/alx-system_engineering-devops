@@ -5,16 +5,19 @@
 
 import requests
 
+
 def number_of_subscribers(subreddit):
     """
-    Queries the Reddit API and returns the number of subscribers for a given subreddit.
+    Queries the Reddit API and returns the number
+    of subscribers for a given subreddit.
     If the subreddit is invalid, it returns 0.
     """
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {
-        "User-Agent": "MyRedditBot/1.0"  # Set a custom User-Agent to avoid Too Many Requests error
+        # Set a custom User-Agent to avoid Too Many Requests error
+        "User-Agent": "MyRedditBot/1.0"
     }
-    
+
     try:
         response = requests.get(url, headers=headers)
         response_data = response.json()
@@ -24,6 +27,7 @@ def number_of_subscribers(subreddit):
             return 0
     except Exception as e:
         return 0
+
 
 if __name__ == '__main__':
     import sys
