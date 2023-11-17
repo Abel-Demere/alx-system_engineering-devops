@@ -1,22 +1,6 @@
 #!/usr/bin/env bash
+# Get the process ID of the Gunicorn master
+MASTER_PID=$(pgrep gunicorn)
 
-# Get the process IDs of the Gunicorn master and workers
-PIDS=$(pgrep -f 'gunicorn')
-
-if [ -z "$PIDS" ]; then
-  echo "No Gunicorn processes found."
-  exit 1
-fi
-
-# Display the current Gunicorn processes
-echo "Before reload:"
-ps aux | grep '[g]unicorn'
-
-# Send a HUP signal to each process for a graceful reload
-for PID in $PIDS; do
-  kill -HUP "$PID"
-done
-
-# Display the Gunicorn processes after the reload
-echo "After reload:"
-ps aux | grep '[g]unicorn'
+# Send a HUP signal to the master process to gracefully reload the workers
+kill -HUP "$MASTER_PID"
