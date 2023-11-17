@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Get the process ID of the Gunicorn master
+
+# Identify the process ID of the Gunicorn master
 MASTER_PID=$(pgrep gunicorn)
 
-# Send a HUP signal to the master process to gracefully reload the workers
+# Initiate a HUP signal to the Gunicorn master process, triggering a graceful worker reload
 kill -HUP "$MASTER_PID"
